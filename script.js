@@ -103,12 +103,6 @@ retrieveButton.addEventListener('click', () => {
     }
 })
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight; // Adjust height as needed
-}
 
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas(); 
 
 
