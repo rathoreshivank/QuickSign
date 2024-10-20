@@ -27,26 +27,28 @@ canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
 })
 
+// Touch event support
+canvas.addEventListener('touchstart', (e) => {
+    isDrawing = true;
+    lastX = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+    lastY = e.touches[0].clientY - canvas.getBoundingClientRect().top;
+});
+
 canvas.addEventListener('touchmove', (e) => {
     if (isDrawing) {
-        const x = e.touches[0].clientX - canvas.offsetLeft;
-        const y = e.touches[0].clientY - canvas.offsetTop;
-        
         ctx.beginPath();
         ctx.moveTo(lastX, lastY);
-        ctx.lineTo(x, y);
+        lastX = e.touches[0].clientX - canvas.getBoundingClientRect().left;
+        lastY = e.touches[0].clientY - canvas.getBoundingClientRect().top;
+        ctx.lineTo(lastX, lastY);
         ctx.stroke();
-        
-        lastX = x;
-        lastY = y;
     }
-    e.preventDefault(); 
+    e.preventDefault(); // Prevent scrolling while drawing
 });
 
 canvas.addEventListener('touchend', () => {
     isDrawing = false;
 });
-
 
 
 canvas.addEventListener('mousemove', (event) => {
@@ -100,4 +102,13 @@ retrieveButton.addEventListener('click', () => {
         ctx.drawImage(img, 0, 0);
     }
 })
+
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight; // Adjust height as needed
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas(); 
+
 
